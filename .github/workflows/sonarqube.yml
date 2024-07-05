@@ -1,0 +1,34 @@
+name: SonarQube Code Analysis For Javascript
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sonarQubeCheck:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run SonarQube scan
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_JAVASCRIPT_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_JAVASCRIPT_KEY }}
+        run: |
+          npx sonarqube-scanner \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
