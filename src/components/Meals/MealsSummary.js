@@ -12,6 +12,7 @@ const MealsSummary = () => {
         All our meals are cooked with high-quality ingredients, just-in-time and
         of course by experienced chefs!
       </p>
+      <h2>Delivered To You</h2>
     </section>
   );
 };
